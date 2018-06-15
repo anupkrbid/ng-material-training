@@ -16,17 +16,23 @@ export class SignUpComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
 
   form: FormGroup;
+  maxDate: Date;
 
   ngOnInit() {
     this.form = this.formBuilder.group(
       {
         name: new FormControl(null, Validators.required),
         email: new FormControl(null, [Validators.required, Validators.email]),
-        password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-        confirmPassword: new FormControl(null, Validators.required)
+        dateOfBirth: new FormControl('', Validators.required),
+        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+        confirmPassword: new FormControl(null, Validators.required),
+        agree: new FormControl(null, Validators.required)
       },
       { validator: this.passwordMissmatch }
     );
+
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
   /** Custom confirm password validator */

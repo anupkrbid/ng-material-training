@@ -16,13 +16,19 @@
           <mat-error *ngIf="form.get('name').hasError('required')">Name field should not be empty!</mat-error>
         </mat-form-field>
 
+        <mat-form-field hintLabel="You should be atleast 18 years old.">
+          <input matInput [matDatepicker]="picker" [max]="maxDate" placeholder="Choose your Date of Birth" name="dateOfBirth" formControName="dateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
         <mat-form-field>
           <input type="email" placeholder="Email" name="email" formControlName="email" matInput>
           <mat-error *ngIf="form.get('email').hasError('required')">Email field should not be empty!</mat-error>
           <mat-error *ngIf="form.get('email').hasError('email')">Email is invalid!</mat-error>
         </mat-form-field>
 
-        <mat-form-field hintLabel="Should be atleast 6 characters long.">
+        <mat-form-field hintLabel="Should be atleast 8 characters long.">
           <input type="password" placeholder="Password" name="password" formControlName="password" matInput>
           <mat-hint align="end">{{ form.get('password').value?.length }} / 8</mat-hint>
           <mat-error *ngIf="form.get('password').hasError('required')">Password field should not be empty!</mat-error>
@@ -35,7 +41,11 @@
           <mat-error *ngIf="form.get('confirmPassword').hasError('passwordMissmatch')">Password and Confirm Password should be same!</mat-error>
         </mat-form-field>
 
-        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">SIGN UP</button>
+        <mat-checkbox labelPosition="after" name="agree" formControName="agree">
+          I agree to Terms and Conditions.
+        </mat-checkbox>
+
+        <button type="submit" mat-raised-button color="primary" >SIGN UP</button>
 
       </form>
     </mat-card-content>
