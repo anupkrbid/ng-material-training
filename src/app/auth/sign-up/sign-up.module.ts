@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { MaterialModule } from '../../shared/material.module';
@@ -11,7 +11,7 @@ import { SignUpRoutingModule } from './sign-up-routing.module';
   imports: [
     CommonModule,
     FlexLayoutModule,
-    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     SignUpRoutingModule
   ],
