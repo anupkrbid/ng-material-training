@@ -1,3 +1,45 @@
-<p>
-  sign-up works!
-</p>
+<section class="sign-up-form" fxLayout="row" fxLayout="column" fxLayoutAlign="center center">
+
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar class="form-header-image"></div>
+      <mat-card-title>Thank You</mat-card-title>
+      <mat-card-subtitle>For Choosing Us!</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form #form="ngForm" (submit)="onSubmit(form)" fxLayout="column">
+
+        <mat-form-field>
+          <input type="email"
+                  placeholder="Email"
+                  name="email"
+                  ngModel
+                  #email="ngModel"
+                  email
+                  required
+                  matInput>
+          <mat-error *ngIf="email.hasError('required')">Email field should not be empty!</mat-error>
+          <mat-error *ngIf="email.hasError('email')">Email is invalid!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field hintLabel="Should be atleast 6 characters long.">
+          <input type="password"
+                  placeholder="Password"
+                  name="password"
+                  ngModel
+                  #password="ngModel"
+                  minlength="8"
+                  required
+                  matInput>
+          <mat-hint align="end">{{ password.value?.length }} / 8</mat-hint>
+          <mat-error *ngIf="password.hasError('required')">Password field should not be empty!</mat-error>
+          <mat-error *ngIf="password.hasError('minlength')">Password should be minimium 6 characters long!</mat-error>
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="primary">SIGN UP</button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</section>

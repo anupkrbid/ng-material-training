@@ -13,8 +13,7 @@ import { MaterialModule } from './shared/material.module';
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    AppRoutingModule,
-    MaterialModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
