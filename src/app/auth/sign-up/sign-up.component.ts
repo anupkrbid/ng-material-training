@@ -26,7 +26,7 @@ export class SignUpComponent implements OnInit {
         dateOfBirth: new FormControl(null, Validators.required),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl(null, Validators.required),
-        agreed: new FormControl(null, Validators.required)
+        agreed: new FormControl(null, [Validators.required, Validators.requiredTrue])
       },
       { validator: this.passwordMissmatch }
     );
@@ -46,21 +46,10 @@ export class SignUpComponent implements OnInit {
     if (pass.value === cnfPass.value) {
       return null;
     } else {
-      control.get('confirmPassword').setErrors({ passwordMissmatch: true });
+      // control.get('confirmPassword').setErrors({ passwordMissmatch: true });
       return { passwordMissmatch: true };
     }
   }
-
-  /** Custom not agreed to terms and conditions validator */
-  // notAgreed = (control: AbstractControl): { [key: string]: boolean } => {
-  //   const agreed = control.get('agreed');
-  //   console.log(agreed);
-  //   if (!agreed && !(agreed.value)) {
-  //     return { notAgreed: true };
-  //   }
-  //   return null;
-  // }
-
 
   onSubmit() {
     console.log(this.form);
