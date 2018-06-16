@@ -23,7 +23,7 @@ export class SignUpComponent implements OnInit {
       {
         name: new FormControl(null, Validators.required),
         email: new FormControl(null, [Validators.required, Validators.email]),
-        dateOfBirth: new FormControl(null, Validators.required),
+        dateOfBirth: new FormControl({ value: null }, Validators.required),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl(null, Validators.required),
         agreed: new FormControl(null, [Validators.required, Validators.requiredTrue])
@@ -46,12 +46,12 @@ export class SignUpComponent implements OnInit {
     if (pass.value === cnfPass.value) {
       return null;
     } else {
-      // control.get('confirmPassword').setErrors({ passwordMissmatch: true });
+      control.get('confirmPassword').setErrors({ passwordMissmatch: true });
       return { passwordMissmatch: true };
     }
   }
 
   onSubmit() {
-    console.log(this.form);
+    console.log(this.form.value);
   }
 }
