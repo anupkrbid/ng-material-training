@@ -23,10 +23,10 @@ export class SignUpComponent implements OnInit {
       {
         name: new FormControl(null, Validators.required),
         email: new FormControl(null, [Validators.required, Validators.email]),
-        dateOfBirth: new FormControl('', Validators.required),
+        dateOfBirth: new FormControl(null, Validators.required),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl(null, Validators.required),
-        agree: new FormControl(null, Validators.required)
+        agreed: new FormControl(null, Validators.required)
       },
       { validator: this.passwordMissmatch }
     );
@@ -51,7 +51,18 @@ export class SignUpComponent implements OnInit {
     }
   }
 
+  /** Custom not agreed to terms and conditions validator */
+  // notAgreed = (control: AbstractControl): { [key: string]: boolean } => {
+  //   const agreed = control.get('agreed');
+  //   console.log(agreed);
+  //   if (!agreed && !(agreed.value)) {
+  //     return { notAgreed: true };
+  //   }
+  //   return null;
+  // }
+
+
   onSubmit() {
-    console.log(this.form.value);
+    console.log(this.form);
   }
 }
