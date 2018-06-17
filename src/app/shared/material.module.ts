@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { NgModule } from '@angular/core';
@@ -24,6 +25,7 @@ import { NgModule } from '@angular/core';
     MatListModule,
     MatNativeDateModule,
     MatSidenavModule,
+    MatTabsModule,
     MatToolbarModule
   ],
   exports: [
@@ -37,6 +39,7 @@ import { NgModule } from '@angular/core';
     MatListModule,
     MatNativeDateModule,
     MatSidenavModule,
+    MatTabsModule,
     MatToolbarModule
   ]
 })

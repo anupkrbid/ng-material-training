@@ -8,9 +8,9 @@ const routes: Routes = [
     { path: 'new', loadChildren: './new-training/new-training.module#NewTrainingModule' },
     { path: 'past', loadChildren: './past-training/past-training.module#PastTrainingModule' },
     { path: 'current', loadChildren: './current-training/current-training.module#CurrentTrainingModule' },
-    { path: '**', redirectTo: '' }
+    // { path: '**', redirectTo: '' }
   ] },
-  { path: '**', redirectTo: '' }
+  // { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
