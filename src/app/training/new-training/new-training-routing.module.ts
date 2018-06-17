@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { NewTrainingComponent } from './new-training.component';
+
+const routes: Routes = [
+  { path: '', component: NewTrainingComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
