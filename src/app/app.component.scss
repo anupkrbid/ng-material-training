@@ -10,23 +10,3 @@ mat-sidenav-container {
     height: 100%;
   }
 }
-
-
-a {
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-
-  &:active, &:hover {
-    color: lightgray;
-  }
-}
-
-.navigation-items {
-  list-style: none;
-}
-
-.nav-caption {
-  display: inline-block;
-  padding: 0 0.25rem;
-}
