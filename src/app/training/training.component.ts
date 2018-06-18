@@ -17,9 +17,4 @@ export class TrainingComponent implements OnInit {
       { label: 'New Training', path: 'new' }
     ];
   }
-
-  show(data) {
-    console.log(data);
-  }
-
 }

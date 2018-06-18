@@ -1,3 +1,25 @@
-<p>
-  new-training works!
-</p>
+<section fxLayout fxLayoutAlign="center">
+  <mat-card fxFlex="25rem">
+
+    <mat-card-title fxLayoutAlign="center">
+      Time to start a workout!
+    </mat-card-title>
+
+    <mat-card-content fxLayoutAlign="center">
+
+      <mat-form-field>
+        <mat-select placeholder="Select type of training">
+          <mat-option *ngFor="let exercise of exercises" [value]="exercise.value">
+            {{ exercise.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions fxLayoutAlign="center">
+      <button type="submit" color="primary" mat-button>Start</button>
+    </mat-card-actions>
+
+  </mat-card>
+</section>

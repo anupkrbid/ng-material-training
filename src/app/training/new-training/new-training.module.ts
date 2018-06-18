@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { NewTrainingRoutingModule } from './new-training-routing.module';
+import { MaterialModule } from '../../shared/material.module';
 import { NewTrainingComponent } from './new-training.component';
+import { NewTrainingRoutingModule } from './new-training-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    NewTrainingRoutingModule
+    FlexLayoutModule,
+    NewTrainingRoutingModule,
+    MaterialModule
   ],
   declarations: [NewTrainingComponent]
 })
