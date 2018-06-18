@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-training',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class NewTrainingComponent implements OnInit {
 
   exercises: any;
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.exercises = [
@@ -17,5 +18,9 @@ export class NewTrainingComponent implements OnInit {
       { value: 'side-lunges', label: 'Side Lunges' },
       { value: 'burpees', label: 'Burpees' }
     ];
+  }
+
+  onStartNewTraining() {
+    this.router.navigate(['/training/current']);
   }
 }
