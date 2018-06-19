@@ -7,16 +7,19 @@ import {
   Validators
 } from '@angular/forms';
 
+import { AuthService } from '../auth.service';
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
 
   form: FormGroup;
   maxDate: Date;
+  constructor(private authService: AuthService,
+              private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group(
@@ -52,6 +55,7 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.authService.signup(this.form.value);
   }
+
 }
