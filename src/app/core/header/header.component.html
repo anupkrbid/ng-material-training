@@ -19,7 +19,7 @@
         <a routerLink="/training">Training</a>
       </li>
       <li *ngIf="isAuthenticated">
-        <a>Sign Out</a>
+        <a (click)="onSignOut()">Sign Out</a>
       </li>
     </ul>
   </div>

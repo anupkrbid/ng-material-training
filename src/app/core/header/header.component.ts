@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
+
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authSubscription$ =
       this.authService.authChange$
         .subscribe(status => this.isAuthenticated = status);
+  }
+
+  onSignOut() {
+    this.authService.signout();
   }
 
   ngOnDestroy() {
