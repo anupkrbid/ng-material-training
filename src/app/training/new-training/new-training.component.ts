@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { TrainingService } from '../training.service';
@@ -19,7 +20,7 @@ export class NewTrainingComponent implements OnInit {
     this.exercises = this.trainingService.getExercises();
   }
 
-  onStartNewTraining() {
-    this.router.navigate(['/training/current']);
+  onStartNewTraining(form: NgForm) {
+    this.router.navigate(['/training/current'], { queryParams: { exId: form.value.exercise } });
   }
 }

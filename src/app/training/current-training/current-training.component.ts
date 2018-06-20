@@ -1,8 +1,11 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
+import { Exercise } from '../exercise.model';
 import { StopTrainingComponent } from './stop-training/stop-training.component';
+import { TrainingService } from '../training.service';
 
 @Component({
   selector: 'app-current-training',
@@ -13,10 +16,19 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
 
   progress = 0;
   timer: any;
+  ongoingExercise: Exercise;
   constructor(private dialog: MatDialog,
-              private router: Router) {}
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private trainingService: TrainingService) {}
 
   ngOnInit() {
+    this.ongoingExercise = this.trainingService.findOngoingExercise(this.activatedRoute.snapshot.queryParams.exId);
+
+    if (!this.ongoingExercise) {
+      this.router.navigate(['/training/new']);
+    }
+
     this.timer = setInterval(() => {
       if (this.progress + 5 > 100) {
         this.progress = 100;

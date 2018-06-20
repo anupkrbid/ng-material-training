@@ -18,4 +18,8 @@ export class TrainingService {
   getExercises() {
     return this.availableExercises.slice();
   }
+
+  findOngoingExercise(exercideId: string) {
+    return this.availableExercises.find(ex => ex.id === exercideId);
+  }
 }
