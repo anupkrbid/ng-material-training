@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { TrainingService } from '../training.service';
+import { Exercise } from '../exercise.model';
+
 @Component({
   selector: 'app-new-training',
   templateUrl: './new-training.component.html',
@@ -8,16 +11,12 @@ import { Router } from '@angular/router';
 })
 export class NewTrainingComponent implements OnInit {
 
-  exercises: any;
-  constructor(private router: Router) { }
+  exercises: Exercise[];
+  constructor(private router: Router,
+              private trainingService: TrainingService) { }
 
   ngOnInit() {
-    this.exercises = [
-      { value: 'crunches', label: 'Crunches' },
-      { value: 'touch-toes', label: 'Touch Toes' },
-      { value: 'side-lunges', label: 'Side Lunges' },
-      { value: 'burpees', label: 'Burpees' }
-    ];
+    this.exercises = this.trainingService.getExercises();
   }
 
   onStartNewTraining() {
