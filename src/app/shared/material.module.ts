@@ -8,10 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { NgModule } from '@angular/core';
@@ -28,10 +31,13 @@ import { NgModule } from '@angular/core';
     MatInputModule,
     MatListModule,
     MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
-    MatProgressSpinnerModule,
+    MatSortModule,
     MatTabsModule,
+    MatTableModule,
     MatToolbarModule
   ],
   exports: [
@@ -45,10 +51,13 @@ import { NgModule } from '@angular/core';
     MatInputModule,
     MatListModule,
     MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
-    MatProgressSpinnerModule,
+    MatSortModule,
     MatTabsModule,
+    MatTableModule,
     MatToolbarModule
   ]
 })
