@@ -29,14 +29,16 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
       this.router.navigate(['/training/new']);
     }
 
+    const step = (this.ongoingExercise.duration / 100) * 1000;
     this.timer = setInterval(() => {
-      if (this.progress + 5 > 100) {
+      if (this.progress + 1 > 100) {
         this.progress = 100;
+        this.trainingService.completeExercise(this.ongoingExercise, null);
         clearInterval(this.timer);
       } else {
-        this.progress = this.progress + 5;
+        this.progress++;
       }
-    }, 1000);
+    }, step);
   }
 
   onStopTraining() {
@@ -49,7 +51,7 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         clearInterval(this.timer);
-        this.router.navigate(['training/new']);
+        this.trainingService.completeExercise(this.ongoingExercise, result);
       }
     });
   }
