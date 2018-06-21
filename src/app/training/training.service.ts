@@ -1,4 +1,6 @@
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { Exercise } from './exercise.model';
@@ -7,7 +9,6 @@ import { Exercise } from './exercise.model';
   providedIn: 'root'
 })
 export class TrainingService {
-
   private pastExercises: Exercise[] = [];
   private availableExercises: Exercise[] = [
     { id: 'test', name: 'Test', duration: 10, calories: 2 },
@@ -16,10 +17,21 @@ export class TrainingService {
     { id: 'side-lunges', name: 'Side Lunges', duration: 120, calories: 18 },
     { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 }
   ];
-  constructor(private router: Router) { }
+  constructor(private router: Router, private db: AngularFirestore) {}
 
   getExercises() {
-    return this.availableExercises.slice();
+    return this.db
+      .collection('exercises')
+      .snapshotChanges()
+      .pipe(
+        map(results => {
+          return results.map(result => {
+            const id = result.payload.doc.id;
+            const data = result.payload.doc.data() as Exercise;
+            return { id, ...data };
+          });
+        })
+      );
   }
 
   getPastExercises() {
@@ -27,13 +39,22 @@ export class TrainingService {
   }
 
   findOngoingExercise(exercideId: string) {
-    return this.availableExercises.find(ex => ex.id === exercideId);
+    const exerciseDocument: AngularFirestoreDocument<Exercise> = this.db.doc<Exercise>(`exercises/${exercideId}`);
+    return exerciseDocument
+      .snapshotChanges()
+      .pipe(
+        map(result => {
+            const id = result.payload.id;
+            const data = result.payload.data() as Exercise;
+            return { id, ...data };
+        })
+      );
   }
 
   completeExercise(exercise: Exercise, progress: number) {
     this.pastExercises.push({
       ...exercise,
-      duration:  !!progress ? exercise.duration * (progress / 100) : exercise.duration,
+      duration: !!progress ? exercise.duration * (progress / 100) : exercise.duration,
       calories: !!progress ? exercise.calories * (progress / 100) : exercise.calories,
       status: !!progress ? 'cancelled' : 'completed',
       date: new Date()

@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Exercise } from '../exercise.model';
 import { StopTrainingComponent } from './stop-training/stop-training.component';
@@ -13,32 +14,41 @@ import { TrainingService } from '../training.service';
   styleUrls: ['./current-training.component.scss']
 })
 export class CurrentTrainingComponent implements OnInit, OnDestroy {
-
   progress = 0;
   timer: any;
   ongoingExercise: Exercise;
-  constructor(private dialog: MatDialog,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private trainingService: TrainingService) {}
+  ongoingExerciseSubscription: Subscription;
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private trainingService: TrainingService
+  ) {}
 
   ngOnInit() {
-    this.ongoingExercise = this.trainingService.findOngoingExercise(this.activatedRoute.snapshot.queryParams.exId);
+    this.ongoingExerciseSubscription = this.trainingService
+      .findOngoingExercise(this.activatedRoute.snapshot.queryParams.exId)
+      .subscribe(
+        data => {
+          this.ongoingExercise = data;
+          if (!this.ongoingExercise) {
+            this.router.navigate(['/training/new']);
+          }
 
-    if (!this.ongoingExercise) {
-      this.router.navigate(['/training/new']);
-    }
+          const step = (this.ongoingExercise.duration / 100) * 1000;
+          this.timer = setInterval(() => {
+            if (this.progress + 1 > 100) {
+              this.progress = 100;
+              this.trainingService.completeExercise(this.ongoingExercise, null);
+              clearInterval(this.timer);
+            } else {
+              this.progress++;
+            }
+          }, step);
+        },
+        err => console.log(err)
+      );
 
-    const step = (this.ongoingExercise.duration / 100) * 1000;
-    this.timer = setInterval(() => {
-      if (this.progress + 1 > 100) {
-        this.progress = 100;
-        this.trainingService.completeExercise(this.ongoingExercise, null);
-        clearInterval(this.timer);
-      } else {
-        this.progress++;
-      }
-    }, step);
   }
 
   onStopTraining() {
@@ -58,5 +68,6 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.timer);
+    this.ongoingExerciseSubscription.unsubscribe();
   }
 }

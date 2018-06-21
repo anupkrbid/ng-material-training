@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { TrainingService } from '../training.service';
 import { Exercise } from '../exercise.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-training',
@@ -12,7 +13,7 @@ import { Exercise } from '../exercise.model';
 })
 export class NewTrainingComponent implements OnInit {
 
-  exercises: Exercise[];
+  exercises: Observable<Exercise[]>;
   constructor(private router: Router,
               private trainingService: TrainingService) { }
 
