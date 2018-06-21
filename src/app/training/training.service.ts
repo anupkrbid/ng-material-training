@@ -1,4 +1,4 @@
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -9,19 +9,11 @@ import { Exercise } from './exercise.model';
   providedIn: 'root'
 })
 export class TrainingService {
-  private pastExercises: Exercise[] = [];
-  private availableExercises: Exercise[] = [
-    { id: 'test', name: 'Test', duration: 10, calories: 2 },
-    { id: 'crunches', name: 'Crunches', duration: 30, calories: 8 },
-    { id: 'touch-toes', name: 'Touch Toes', duration: 180, calories: 15 },
-    { id: 'side-lunges', name: 'Side Lunges', duration: 120, calories: 18 },
-    { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 }
-  ];
   constructor(private router: Router, private db: AngularFirestore) {}
 
   getExercises() {
-    return this.db
-      .collection('exercises')
+    const exerciseCollection: AngularFirestoreCollection<Exercise> = this.db.collection('exercises');
+    return exerciseCollection
       .snapshotChanges()
       .pipe(
         map(results => {
@@ -35,7 +27,8 @@ export class TrainingService {
   }
 
   getPastExercises() {
-    return this.pastExercises.slice();
+    const exerciseCollection: AngularFirestoreCollection<Exercise> = this.db.collection('past-exercises');
+    return exerciseCollection.valueChanges();
   }
 
   findOngoingExercise(exercideId: string) {
@@ -52,13 +45,15 @@ export class TrainingService {
   }
 
   completeExercise(exercise: Exercise, progress: number) {
-    this.pastExercises.push({
+    const performedExercise = {
       ...exercise,
       duration: !!progress ? exercise.duration * (progress / 100) : exercise.duration,
       calories: !!progress ? exercise.calories * (progress / 100) : exercise.calories,
       status: !!progress ? 'cancelled' : 'completed',
       date: new Date()
-    });
+    };
+    delete performedExercise.id;
+    this.db.collection('past-exercises').add(performedExercise);
     this.router.navigate(['training/new']);
   }
 }
