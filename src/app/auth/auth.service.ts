@@ -1,3 +1,4 @@
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -6,49 +7,46 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
-  private user: any;
+  private loggedIn = false;
   authChange$ = new Subject<boolean>();
-  constructor(private router: Router) { }
+  constructor(private router: Router, private afAuth: AngularFireAuth) {}
 
   signup(data: any) {
-    this.user = {
-      name: data.name,
-      date: data.dateOfBirth,
-      email: data.email,
-      password: data.password,
-      userid: Math.round(Math.random() * 10000).toString()
-    };
-    this.redirectAfterSignIn();
+    this.afAuth.auth
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then(result => this.redirectAfterSignIn())
+      .catch(error => console.log(error));
   }
 
   signin(data: any) {
-    this.user = {
-      email: data.email,
-      password: data.password
-    };
-    this.redirectAfterSignIn();
+    this.afAuth.auth
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then(result => this.redirectAfterSignIn())
+      .catch(error => console.log(error));
   }
 
   signout() {
-    this.user = null;
+    this.afAuth.auth.signOut();
+    this.loggedIn = false;
     this.redirectAfterSignOut();
   }
 
   getUser() {
-    return { ...this.user };
+    return { };
   }
 
   isAuthenticated() {
-    return !!this.user;
+    return this.loggedIn;
   }
 
   redirectAfterSignIn() {
+    this.loggedIn = true;
     this.authChange$.next(true);
     this.router.navigate(['/training']);
   }
 
   redirectAfterSignOut() {
+    this.loggedIn = false;
     this.authChange$.next(false);
     this.router.navigate(['/sign-in']);
   }
