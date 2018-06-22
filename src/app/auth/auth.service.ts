@@ -1,5 +1,6 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
@@ -10,20 +11,22 @@ export class AuthService {
   private loggedIn = false;
   private user: any;
   authChange$ = new Subject<boolean>();
-  constructor(private router: Router, private afAuth: AngularFireAuth) {}
+  constructor(private router: Router,
+              private afAuth: AngularFireAuth,
+              private snackBar: MatSnackBar) {}
 
   signup(data: any) {
     this.afAuth.auth
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(result => console.log(result))
-      .catch(error => console.log(error));
+      .catch((error: any) => this.openSnackBar(error.mesaage, null));
   }
 
   signin(data: any) {
     this.afAuth.auth
       .signInWithEmailAndPassword(data.email, data.password)
       .then(result => console.log(result))
-      .catch(error => console.log(error));
+      .catch((error: any) => this.openSnackBar(error.message, null));
   }
 
   signout() {
@@ -62,5 +65,11 @@ export class AuthService {
     this.loggedIn = false;
     this.authChange$.next(false);
     this.router.navigate(['/sign-in']);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 }
