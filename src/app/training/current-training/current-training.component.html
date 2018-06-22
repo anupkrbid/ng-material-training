@@ -1,6 +1,7 @@
 <section fxLayout="column" fxLayoutAlign="center center">
-  <mat-progress-spinner mode="determinate" [value]="progress"></mat-progress-spinner>
+  <mat-progress-spinner *ngIf="!(trainingService.isLoading$ | async)" mode="determinate" [value]="progress"></mat-progress-spinner>
+  <mat-spinner *ngIf="trainingService.isLoading$ | async"></mat-spinner>
   <h1>{{ progress }}%</h1>
   <p>Keep on going, you can do it!</p>
-  <button type="button" mat-raised-button color="accent" (click)="onStopTraining()">Stop</button>
+  <button type="button" mat-raised-button color="accent" [disabled]="trainingService.isLoading$ | async" (click)="onStopTraining()">Stop</button>
 </section>

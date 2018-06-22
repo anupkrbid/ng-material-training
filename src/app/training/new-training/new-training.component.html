@@ -10,13 +10,17 @@
 
       <mat-card-content fxLayoutAlign="center">
 
-        <mat-form-field>
-          <mat-select placeholder="Select an exercise" name="exercise" ngModel required>
-            <mat-option *ngFor="let exercise of exercises | async" [value]="exercise.id">
-              {{ exercise.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div [hidden]="trainingService.isLoading$ | async">
+          <mat-form-field>
+            <mat-select placeholder="Select an exercise" name="exercise" ngModel required>
+              <mat-option *ngFor="let exercise of exercises | async" [value]="exercise.id">
+                {{ exercise.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-spinner *ngIf="trainingService.isLoading$ | async"></mat-spinner>
 
       </mat-card-content>
 

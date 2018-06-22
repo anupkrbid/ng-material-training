@@ -22,7 +22,7 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private trainingService: TrainingService
+    public trainingService: TrainingService
   ) {}
 
   ngOnInit() {

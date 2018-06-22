@@ -15,7 +15,7 @@ export class NewTrainingComponent implements OnInit {
 
   exercises: Observable<Exercise[]>;
   constructor(private router: Router,
-              private trainingService: TrainingService) { }
+              public trainingService: TrainingService) { }
 
   ngOnInit() {
     this.exercises = this.trainingService.getExercises();
