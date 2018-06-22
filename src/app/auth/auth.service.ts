@@ -8,31 +8,44 @@ import { Subject } from 'rxjs';
 })
 export class AuthService {
   private loggedIn = false;
+  private user: any;
   authChange$ = new Subject<boolean>();
   constructor(private router: Router, private afAuth: AngularFireAuth) {}
 
   signup(data: any) {
     this.afAuth.auth
       .createUserWithEmailAndPassword(data.email, data.password)
-      .then(result => this.redirectAfterSignIn())
+      .then(result => console.log(result))
       .catch(error => console.log(error));
   }
 
   signin(data: any) {
     this.afAuth.auth
       .signInWithEmailAndPassword(data.email, data.password)
-      .then(result => this.redirectAfterSignIn())
+      .then(result => console.log(result))
       .catch(error => console.log(error));
   }
 
   signout() {
     this.afAuth.auth.signOut();
     this.loggedIn = false;
-    this.redirectAfterSignOut();
+    // this.redirectAfterSignOut();
   }
 
   getUser() {
-    return { };
+    return this.user;
+  }
+
+  initAuthListener() {
+    this.afAuth.authState.subscribe((auth) => {
+      if (auth) {
+        console.log('auth', auth);
+        this.user = auth;
+        this.redirectAfterSignIn();
+      } else {
+        this.redirectAfterSignOut();
+      }
+    });
   }
 
   isAuthenticated() {
