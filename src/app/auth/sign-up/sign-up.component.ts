@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit {
 
   form: FormGroup;
   maxDate: Date;
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private formBuilder: FormBuilder) {}
 
   ngOnInit() {

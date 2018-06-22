@@ -35,7 +35,8 @@
           <mat-error *ngIf="password.hasError('required')">Password field should not be empty!</mat-error>
         </mat-form-field>
 
-        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">SIGN IN</button>
+        <button type="submit" *ngIf="!(authService.isLoading$ | async)" mat-raised-button color="primary" [disabled]="form.invalid">SIGN IN</button>
+        <mat-spinner *ngIf="authService.isLoading$ | async"></mat-spinner>
 
       </form>
     </mat-card-content>

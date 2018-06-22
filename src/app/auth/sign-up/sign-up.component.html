@@ -45,7 +45,8 @@
           I agree to Terms and Conditions.
         </mat-checkbox>
 
-        <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">SIGN UP</button>
+        <button type="submit" *ngIf="!(authService.isLoading$ | async)" [disabled]="form.invalid" mat-raised-button color="primary">SIGN UP</button>
+        <mat-spinner *ngIf="authService.isLoading$ | async"></mat-spinner>
 
       </form>
     </mat-card-content>
